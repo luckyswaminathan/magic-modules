@@ -1,4 +1,5 @@
-BINARY_NAME=plan-tester
+BINARY_NAME := plan-tester
+GO_BUILD := go build -o $(BINARY_NAME) -ldflags="-s -w" -trimpath
 
 clone:
 ifndef OWNER_REPO
@@ -10,7 +11,7 @@ ifdef DEPTH
 else
 	git clone https://github.com/$(OWNER_REPO).git old
 endif
-	cp -r old/ new/   
+	cp -r old/ new/
 
 clean:
 	cd old/; \
@@ -58,7 +59,5 @@ endif
 	go mod tidy
 	mkdir -p bin/
 	go build -o ./bin/ .
-
-
 
 .PHONY: clone clean build
