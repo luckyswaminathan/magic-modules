@@ -11,9 +11,11 @@ ifndef OWNER_REPO
 endif
 	rm -rf ./old ./new
 ifdef DEPTH
-	git clone --depth=$(DEPTH) https://github.com/$(OWNER_REPO).git old
+	git clone https://github.com/$(OWNER_REPO).git old
+	git reflog
 else
 	git clone https://github.com/$(OWNER_REPO).git old
+	git reflog
 endif
 	cp -r old/ new/
 
