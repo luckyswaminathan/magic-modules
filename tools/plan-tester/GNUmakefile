@@ -1,5 +1,9 @@
 BINARY_NAME := plan-tester
 GO_BUILD := go build -o $(BINARY_NAME) -ldflags="-s -w" -trimpath
+## TODO: remove this as it is an intermediary to hardcode providers and versions
+OWNER_REPO := hashicorp/terraform-provider-google-beta
+DEPTH ?= 1
+
 
 clone:
 ifndef OWNER_REPO
