@@ -26,7 +26,8 @@ func TestAccBigtableInstance_basic(t *testing.T) {
 		CheckDestroy:             testAccCheckBigtableInstanceDestroyProducer(t),
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccBigtableInstance_invalid(instanceName),
+				Config: testAccBigtableInstance_invalid(instanceName),
+
 				ExpectError: regexp.MustCompile("config is invalid: Too few cluster blocks: Should have at least 1 \"cluster\" block"),
 			},
 			{

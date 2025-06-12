@@ -220,9 +220,13 @@ func initializeReleaseDiffTest(c resource.TestCase, testName string) resource.Te
 		c.ExternalProviders[releaseProvider] = resource.ExternalProvider{}
 	} else {
 		c.ExternalProviders = map[string]resource.ExternalProvider{
-			releaseProvider: {},
+			releaseProvider: {
+				VersionConstraint: "6.33.0",
+				Source:            "hashicorp/google-beta",
+			},
 		}
 	}
+	fmt.Fprintf(os.Stdout, "Using release provider: %s\n", c.ExternalProviders[releaseProvider].VersionConstraint)
 
 	localProviderName := "google-local"
 	if c.Providers != nil {
@@ -248,6 +252,7 @@ func initializeReleaseDiffTest(c resource.TestCase, testName string) resource.Te
 		if testStep.Config != "" {
 			ogConfig := testStep.Config
 			testStep.Config = reformConfigWithProvider(ogConfig, localProviderName)
+			fmt.Printf("Reformed config for test step: %s\n", testStep.Config)
 			if testStep.ExpectError == nil && testStep.PlanOnly == false {
 				newStep := resource.TestStep{
 					Config: reformConfigWithProvider(ogConfig, releaseProvider),
