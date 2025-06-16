@@ -221,8 +221,7 @@ func initializeReleaseDiffTest(c resource.TestCase, testName string) resource.Te
 	} else {
 		c.ExternalProviders = map[string]resource.ExternalProvider{
 			releaseProvider: {
-				VersionConstraint: "6.33.0",
-				Source:            "hashicorp/google-beta",
+				VersionConstraint: "= 6.33.0",
 			},
 		}
 	}
