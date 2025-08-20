@@ -199,6 +199,16 @@ func (t *Terraform) GenerateSingularDataSource(object api.Resource, templateData
 	if err := os.MkdirAll(targetFolder, os.ModePerm); err != nil {
 		log.Println(fmt.Errorf("error creating parent directory %v: %v", targetFolder, err))
 	}
+	// generate docs if the exclude docs flag isn't set to true
+	if !object.Datasource.ExcludeDocs {
+		targetFolder := path.Join(outputFolder, "website", "docs", "r")
+		if err := os.MkdirAll(targetFolder, os.ModePerm); err != nil {
+			log.Println(fmt.Errorf("error creating parent directory %v: %v", targetFolder, err))
+		}
+		targetFilePath := path.Join(targetFolder, fmt.Sprintf("%s_data_source.html.markdown", t.FullResourceName(object)))
+		templateData.GenerateDocumentationFile(targetFilePath, object)
+
+	}
 	targetFilePath := path.Join(targetFolder, fmt.Sprintf("data_source_%s.go", t.ResourceGoFilename(object)))
 	templateData.GenerateDataSourceFile(targetFilePath, object)
 }

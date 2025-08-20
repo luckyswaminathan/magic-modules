@@ -16,4 +16,6 @@ package resource
 type Datasource struct {
 	// boolean to determine whether the datasource file should be generated
 	Generate bool `yaml:"generate"`
+	// boolean to exclude doc generation, default behavior is generation
+	ExcludeDocs bool `yaml:"exclude_docs"`
 }
