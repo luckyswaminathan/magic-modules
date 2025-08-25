@@ -206,7 +206,7 @@ func (t *Terraform) GenerateSingularDataSource(object api.Resource, templateData
 			log.Println(fmt.Errorf("error creating parent directory %v: %v", targetFolder, err))
 		}
 		targetFilePath := path.Join(targetFolder, fmt.Sprintf("%s_data_source.html.markdown", t.FullResourceName(object)))
-		templateData.GenerateDocumentationFile(targetFilePath, object)
+		templateData.GenerateSingularDatasourceDocumentationFile(targetFilePath, object)
 
 	}
 	targetFilePath := path.Join(targetFolder, fmt.Sprintf("data_source_%s.go", t.ResourceGoFilename(object)))
