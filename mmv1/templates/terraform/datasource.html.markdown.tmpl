@@ -18,3 +18,42 @@ description: |-
   {{- $.FormatDocDescription (firstSentence $.Description) true }}
 ---
 
+# {{$.TerraformName}}
+{{- if $.DeprecationMessage }}
+~> **Warning:** {{$.DeprecationMessage}}
+{{- end }}
+
+## Example Usage
+
+```tf 
+data {{ $.TerraformName }}
+
+## Arguments Reference 
+
+
+{{- range $.Parameters }}
+- `{{.Name}}` - {{ if .Required }}(Required){{ else }}(Optional){{ end }} {{.Description}}
+{{- end }}
+
+## Attributes Reference
+
+In addition to the arguments listed above, the following computed attributes are exported:
+
+* `id` - an identifier for the resource with format `{{$.IdFormat}}`
+{{ range $p := $.RootProperties }}
+	{{- if $p.Output }}
+{{- trimTemplate "property_documentation.html.markdown.tmpl" $p }}
+	{{- end}}
+{{- end }}
+{{- if $.HasSelfLink -}}
+* `self_link` - The URI of the created resource.
+{{ "" }}
+{{- end }}
+{{- if $.Docs.Attributes }}
+{{ $.Docs.Attributes }}
+{{- end }}
+{{ range $p := $.AllUserProperties }}
+	{{- if $p.Output }}
+{{- trimTemplate "nested_property_documentation.html.markdown.tmpl" $p }}
+	{{- end }}
+{{- end }}
